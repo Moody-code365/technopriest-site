@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>moody · technopriest</title>
+<meta name="description" content="moody — sysadmin evolving into a DevOps engineer. Home lab, self-hosting, automation. Portfolio under construction." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-2: #0c111b;
+    --panel: #0f1623;
+    --border: #1b2533;
+    --border-2: #283546;
+    --cyan: #2ce8df;
+    --cyan-dim: #16a89f;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --text: #e6edf3;
+    --muted: #6b7785;
+    --muted-2: #46525f;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ambient glow behind the terminal — static, single restrained atmosphere */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(620px 420px at 50% 38%, rgba(44, 232, 223, 0.07), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 24px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- top bar ---- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: auto;
+  }
+  .topbar .handle { color: var(--text); }
+  .topbar .handle .at { color: var(--cyan); }
+  .build-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--border-2);
+    border-radius: 999px;
+    padding: 4px 11px;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber);
+  }
+
+  /* ---- center stage ---- */
+  .stage {
+    margin: auto 0;
+    padding: 44px 0;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--cyan-dim);
+    margin-bottom: 14px;
+  }
+  .eyebrow b { color: var(--cyan); font-weight: 500; }
+
+  /* ---- terminal (the signature element) ---- */
+  .term {
+    background: linear-gradient(180deg, var(--panel), var(--bg-2));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.03) inset,
+      0 24px 60px -28px rgba(0,0,0,0.8),
+      0 0 0 1px rgba(44,232,223,0.04);
+  }
+  .term-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    background: rgba(255,255,255,0.015);
+    border-bottom: 1px solid var(--border);
+  }
+  .term-head .lights { display: flex; gap: 7px; }
+  .term-head .lights span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--border-2);
+  }
+  .term-head .lights span:nth-child(1) { background: #3a4452; }
+  .term-head .title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+  .term-body {
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.85;
+    padding: 20px 18px 22px;
+    min-height: 290px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  @media (min-width: 560px) {
+    .term-body { font-size: 15px; padding: 24px 22px 26px; }
+  }
+
+  .line { display: block; }
+  .prompt { color: var(--cyan); }
+  .prompt .path { color: var(--muted); }
+  .cmd { color: var(--text); }
+  .out { color: var(--muted); }
+  .out .hl { color: var(--text); }
+  .out .ok { color: var(--green); }
+  .out .warn { color: var(--amber); }
+  .out .accent { color: var(--cyan); }
+
+  .cursor {
+    display: inline-block;
+    width: 9px;
+    height: 1.05em;
+    background: var(--cyan);
+    transform: translateY(2px);
+    box-shadow: 0 0 8px rgba(44,232,223,0.7);
+    animation: blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ---- links row ---- */
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .links a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    padding: 9px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    transition: border-color .18s ease, color .18s ease, background .18s ease;
+  }
+  .links a .arrow { color: var(--muted); transition: color .18s ease, transform .18s ease; }
+  .links a:hover,
+  .links a:focus-visible {
+    border-color: var(--cyan-dim);
+    color: var(--cyan);
+    background: rgba(44,232,223,0.04);
+    outline: none;
+  }
+  .links a:hover .arrow,
+  .links a:focus-visible .arrow { color: var(--cyan); transform: translateX(2px); }
+  .links a:focus-visible { box-shadow: 0 0 0 3px rgba(44,232,223,0.25); }
+
+  /* ---- footer status ---- */
+  .footer {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted-2);
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+  .footer .seg { display: inline-flex; align-items: center; gap: 7px; }
+  .footer .d-on  { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .footer .d-off { width: 6px; height: 6px; border-radius: 50%; background: var(--muted-2); }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 20px 16px 32px; }
+    .topbar { font-size: 12px; }
+    .term-body { min-height: 320px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <span class="handle">moody<span class="at">@</span>technopriest</span>
+      <span class="build-tag"><span class="dot"></span>building</span>
+    </header>
+
+    <main class="stage">
+      <p class="eyebrow">// node: <b>technopriest.net</b> — first light</p>
+
+      <section class="term" aria-label="Terminal introduction">
+        <div class="term-head">
+          <div class="lights"><span></span><span></span><span></span></div>
+          <span class="title">moody@technopriest: ~</span>
+        </div>
+        <div class="term-body" id="term"></div>
+      </section>
+
+      <nav class="links" aria-label="Links">
+        <a href="https://github.com/Moody-code365" target="_blank" rel="noopener">
+          github <span class="arrow">→</span>
+        </a>
+        <a href="mailto:moody@technopriest.net">
+          moody@technopriest.net <span class="arrow">→</span>
+        </a>
+      </nav>
+
+      <div class="footer">
+        <span class="seg"><span class="d-on"></span>edge: cloudflare</span>
+        <span class="seg"><span class="d-off"></span>origin: home-lab (provisioning)</span>
+        <span class="seg">v0.1</span>
+      </div>
+    </main>
+  </div>
+
+<script>
+(function () {
+  var term = document.getElementById('term');
+
+  // each step: a typed command, then its instant output line(s)
+  var P = '<span class="prompt">moody@technopriest<span class="path">:~$</span></span> ';
+  var seq = [
+    { cmd: 'whoami',
+      out: ['<span class="out"><span class="hl">moody</span> — sysadmin evolving into a DevOps engineer</span>'] },
+    { cmd: 'cat mission.txt',
+      out: ['<span class="out">I break things in my home lab so I learn them for real.</span>'] },
+    { cmd: 'systemctl status portfolio.service',
+      out: [
+        '<span class="out"><span class="warn">●</span> portfolio.service — moody\u2019s DevOps portfolio</span>',
+        '<span class="out">     Active: <span class="warn">building</span> (under construction)</span>',
+        '<span class="out">      Stack: <span class="accent">Linux \u00b7 Python \u00b7 self-hosting \u00b7 automation \u00b7 IaC</span></span>'
+      ] },
+    { cmd: 'ls ./next/',
+      out: ['<span class="out">about/   projects/   home-lab/   live-metrics/</span>'] }
+  ];
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function finalCursorLine() {
+    return '<span class="line">' + P + '<span class="cursor"></span></span>';
+  }
+
+  if (reduce) {
+    var html = '';
+    seq.forEach(function (s) {
+      html += '<span class="line">' + P + '<span class="cmd">' + s.cmd + '</span></span>';
+      s.out.forEach(function (o) { html += '<span class="line">' + o + '</span>'; });
+    });
+    html += finalCursorLine();
+    term.innerHTML = html;
+    return;
+  }
+
+  var built = '';        // committed html
+  var si = 0;            // step index
+
+  function typeCmd(text, done) {
+    var i = 0;
+    var lineStart = '<span class="line">' + P + '<span class="cmd">';
+    (function tick() {
+      var partial = lineStart + text.slice(0, i) + '<span class="cursor"></span></span></span>';
+      term.innerHTML = built + partial;
+      if (i < text.length) {
+        i++;
+        setTimeout(tick, 34 + Math.random() * 36);
+      } else {
+        built += lineStart + text + '</span></span>';
+        done();
+      }
+    })();
+  }
+
+  function printOut(lines, done) {
+    var k = 0;
+    (function next() {
+      if (k < lines.length) {
+        built += '<span class="line">' + lines[k] + '</span>';
+        term.innerHTML = built + finalCursorLine();
+        k++;
+        setTimeout(next, 130);
+      } else {
+        done();
+      }
+    })();
+  }
+
+  function runStep() {
+    if (si >= seq.length) {
+      term.innerHTML = built + finalCursorLine();
+      return;
+    }
+    var step = seq[si++];
+    typeCmd(step.cmd, function () {
+      setTimeout(function () {
+        printOut(step.out, function () {
+          setTimeout(runStep, 360);
+        });
+      }, 180);
+    });
+  }
+
+  setTimeout(runStep, 450);
+})();
+</script>
+</body>
+</html>
