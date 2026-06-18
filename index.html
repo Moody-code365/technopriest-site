@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>moody · technopriest</title>
-<meta name="description" content="moody — sysadmin evolving into a DevOps engineer. Home lab, self-hosting, automation." />
+<title>MOODY · technopriest</title>
+<meta name="description" content="Filipp — sysadmin transitioning into DevOps. Night ops, WireGuard, Zabbix, home lab. Almaty, KZ." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -45,7 +45,6 @@
     overflow-x: hidden;
   }
 
-  /* grid + ambient glow — one layer, very subtle */
   body::before {
     content: "";
     position: fixed;
@@ -63,12 +62,12 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 840px;
+    max-width: 860px;
     margin: 0 auto;
     padding: 0 24px 96px;
   }
 
-  /* ─── TOP BAR ─── */
+  /* ── TOP BAR ── */
   .topbar {
     display: flex;
     align-items: center;
@@ -98,12 +97,9 @@
     flex-shrink: 0;
     animation: dpulse 2.4s ease-in-out infinite;
   }
-  @keyframes dpulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.35; }
-  }
+  @keyframes dpulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-  /* ─── HERO ─── */
+  /* ── HERO ── */
   .hero {
     padding: 60px 0 52px;
     border-bottom: 1px solid var(--border);
@@ -114,23 +110,30 @@
     color: var(--muted);
     margin-bottom: 22px;
   }
-  .eyebrow .node { color: var(--cyan-dim); }
-  .eyebrow .node b { color: var(--cyan); font-weight: 500; }
+  .eyebrow .ec { color: var(--cyan-dim); }
+  .eyebrow .ec b { color: var(--cyan); font-weight: 500; }
 
   .hero-name {
     font-family: var(--head);
-    font-size: clamp(56px, 11vw, 96px);
+    font-size: clamp(48px, 10vw, 92px);
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--text);
-    line-height: 0.93;
-    /* restrained blue glow — one of the two key accents */
+    line-height: 1.05;
     text-shadow: 0 0 60px rgba(79, 140, 255, 0.2);
   }
   .hero-name .hl {
     color: var(--cyan);
     text-shadow: 0 0 36px rgba(44, 232, 223, 0.45);
+  }
+  .hero-name .sep { color: var(--border-3); }
+  .hero-name .sub {
+    color: var(--text-2);
+    font-size: 0.68em;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: none;
   }
 
   .hero-role {
@@ -162,9 +165,8 @@
     text-transform: uppercase;
   }
 
-  /* ─── SECTION LAYOUT ─── */
+  /* ── SECTION LAYOUT ── */
   .section { padding: 56px 0 0; }
-
   .sec-head {
     display: flex;
     align-items: baseline;
@@ -192,7 +194,7 @@
     flex-shrink: 0;
   }
 
-  /* ─── TERMINAL ─── */
+  /* ── TERMINAL ── */
   .term {
     background: linear-gradient(160deg, var(--panel-2) 0%, var(--panel) 100%);
     border: 1px solid var(--border);
@@ -220,20 +222,13 @@
     border-bottom: 1px solid var(--border);
   }
   .term-head .lights { display: flex; gap: 6px; }
-  .term-head .lights span {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--border-2);
-  }
-  .term-head .ttitle {
-    font-size: 12px;
-    color: var(--muted);
-    margin-left: 4px;
-  }
+  .term-head .lights span { width: 10px; height: 10px; border-radius: 50%; background: var(--border-2); }
+  .term-head .ttitle { font-size: 12px; color: var(--muted); margin-left: 4px; }
   .term-body {
     font-size: 14px;
     line-height: 1.9;
     padding: 20px 18px 24px;
-    min-height: 272px;
+    min-height: 256px;
     white-space: pre-wrap;
     word-break: break-word;
   }
@@ -250,8 +245,9 @@
   .out .ok { color: var(--green); }
   .out .wip { color: var(--blue); }
   .out .accent { color: var(--cyan); }
+  .cmt { color: var(--muted); }
+  .cmt .omni { color: var(--cyan-dim); }
 
-  /* cursor — second key glowing accent */
   .cursor {
     display: inline-block;
     width: 8px;
@@ -263,51 +259,39 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
 
-  /* ─── STATS ─── */
-  .stats-row {
+  /* ── ABOUT ── */
+  .about-kv {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 8px;
+    margin-bottom: 22px;
   }
-  .stat-card {
+  .kv {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px 20px;
-    transition: border-color .2s, box-shadow .2s;
+    border-radius: 7px;
+    padding: 12px 16px;
   }
-  .stat-card:hover {
-    border-color: var(--border-3);
-    box-shadow: 0 0 18px rgba(44,232,223,0.05);
-  }
-  .stat-key {
+  .kv-k {
     font-size: 10px;
     color: var(--muted);
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    margin-bottom: 9px;
+    margin-bottom: 5px;
   }
-  .stat-val {
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-  .stat-val .unit { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 3px; }
-  .stat-sub {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 7px;
-  }
+  .kv-v { font-size: 13px; color: var(--text); }
+  .about-text { display: flex; flex-direction: column; gap: 12px; }
+  .about-text p { font-size: 14px; color: var(--text-2); line-height: 1.8; }
+  .about-text .hl { color: var(--text); }
+  .about-text .acc { color: var(--cyan); }
 
-  /* ─── SKILLS ─── */
+  /* ── SKILLS ── */
   .skill-groups {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  @media (max-width: 560px) { .skill-groups { grid-template-columns: 1fr; } }
+  @media (max-width: 540px) { .skill-groups { grid-template-columns: 1fr; } }
 
   .skill-group {
     background: var(--panel);
@@ -332,12 +316,16 @@
     border-radius: 4px;
     padding: 3px 9px;
     background: var(--bg-3);
-    transition: border-color .15s, color .15s;
   }
   .stag.hot {
     color: var(--cyan);
     border-color: rgba(44, 232, 223, 0.22);
     background: rgba(44, 232, 223, 0.04);
+  }
+  .stag.wip {
+    color: var(--blue);
+    border-color: rgba(79, 140, 255, 0.22);
+    background: rgba(79, 140, 255, 0.04);
   }
   .stag.next {
     color: var(--muted);
@@ -346,10 +334,122 @@
     background: transparent;
   }
 
-  /* ─── HOMELAB NODES ─── */
+  /* ── PROJECTS ── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .proj-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+  }
+  .proj-card:hover {
+    border-color: var(--cyan-dim);
+    background: var(--panel-2);
+    box-shadow: 0 0 28px rgba(44, 232, 223, 0.07), inset 0 0 0 1px rgba(44,232,223,0.04);
+  }
+  .proj-card:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
+  }
+  .proj-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .proj-name {
+    font-family: var(--head);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text);
+  }
+  .proj-badge {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border-2);
+    border-radius: 999px;
+    padding: 2px 9px;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .proj-badge.live {
+    color: var(--green);
+    border-color: rgba(45, 212, 160, 0.3);
+    background: rgba(45, 212, 160, 0.04);
+  }
+  .proj-badge.oss {
+    color: var(--cyan-dim);
+    border-color: rgba(44,232,223,0.2);
+    background: rgba(44,232,223,0.03);
+  }
+  .proj-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.65;
+    flex: 1;
+  }
+  .proj-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .proj-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pchip {
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 7px;
+    background: var(--bg-2);
+    letter-spacing: 0.03em;
+  }
+  .proj-link {
+    font-size: 11px;
+    color: var(--blue);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    transition: color .15s;
+  }
+  .proj-card:hover .proj-link { color: var(--cyan); }
+
+  /* ── HOMELAB ── */
+  .lab-banner {
+    background: var(--panel);
+    border: 1px dashed var(--border-2);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .lb-title {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .lb-sub { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
   .nodes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 10px;
   }
   .node-card {
@@ -357,13 +457,9 @@
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 16px 18px;
-    transition: border-color .2s, box-shadow .2s, background .2s;
+    transition: border-color .2s, background .2s;
   }
-  .node-card:hover {
-    border-color: var(--cyan-dim);
-    background: var(--panel-2);
-    box-shadow: 0 0 22px rgba(44,232,223,0.07), inset 0 0 0 1px rgba(44,232,223,0.05);
-  }
+  .node-card:hover { border-color: var(--border-3); background: var(--panel-2); }
   .node-top {
     display: flex;
     align-items: center;
@@ -373,17 +469,12 @@
   .node-name { font-size: 13px; color: var(--text); font-weight: 500; }
   .node-status { display: flex; align-items: center; gap: 5px; font-size: 11px; }
 
-  .sdot {
-    width: 6px; height: 6px; border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .sdot.on  { background: var(--green); box-shadow: 0 0 6px var(--green); animation: dpulse 2.8s ease-in-out infinite; }
-  .sdot.off { background: var(--muted-2); }
-  .sdot.wip { background: var(--cyan); box-shadow: 0 0 6px rgba(44,232,223,0.7); animation: dpulse 1.6s ease-in-out infinite; }
+  .sdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .sdot.dormant  { background: var(--muted-2); }
+  .sdot.planned  { background: transparent; border: 1.5px dashed var(--muted-2); }
 
-  .st-on  { color: var(--green); }
-  .st-off { color: var(--muted); }
-  .st-wip { color: var(--cyan-dim); }
+  .st-dormant { color: var(--muted); }
+  .st-planned { color: var(--muted-2); }
 
   .node-role  { font-size: 12px; color: var(--text-2); margin-bottom: 10px; }
   .node-chips { display: flex; flex-wrap: wrap; gap: 5px; }
@@ -396,89 +487,59 @@
     background: var(--bg-2);
     letter-spacing: 0.03em;
   }
-
-  /* ─── SERVICES ─── */
-  .svc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
-    gap: 10px;
+  .nchip.pending {
+    border-style: dashed;
+    color: var(--muted-2);
+    background: transparent;
   }
-  .svc-card {
+
+  /* ── METRICS PLACEHOLDER ── */
+  .metrics-ph {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
+    border-radius: 10px;
+    padding: 44px 24px;
+    text-align: center;
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .svc-card:hover {
-    border-color: var(--blue-dim);
-    box-shadow: 0 0 18px rgba(79,140,255,0.07);
-  }
-  .svc-ico {
-    width: 30px; height: 30px;
-    border: 1px solid var(--border-2);
-    border-radius: 6px;
-    background: var(--bg-3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--blue);
-    flex-shrink: 0;
-    letter-spacing: 0;
-  }
-  .svc-name { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 3px; }
-  .svc-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
-
-  /* ─── ROADMAP ─── */
-  .rm-list { display: flex; flex-direction: column; gap: 8px; }
-  .rm-item {
-    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 12px;
-    padding: 13px 18px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: border-color .2s;
   }
-  .rm-item:hover { border-color: var(--border-3); }
-  .rm-item.is-done { opacity: 0.55; }
-
-  .rm-box {
-    width: 18px; height: 18px;
-    border: 1.5px solid var(--border-2);
-    border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px;
-    flex-shrink: 0;
-  }
-  .rm-box.done { border-color: var(--cyan-dim); background: rgba(44,232,223,0.08); color: var(--cyan); }
-  .rm-box.wip  { border-color: var(--blue-dim); background: rgba(79,140,255,0.08); color: var(--blue); }
-
-  .rm-text  { font-size: 13px; color: var(--text); flex: 1; }
-  .rm-badge {
-    font-size: 10px;
+  .mph-title {
+    font-family: var(--head);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
     color: var(--muted);
-    flex-shrink: 0;
   }
-  .rm-badge.done { color: var(--cyan-dim); }
-  .rm-badge.wip  { color: var(--blue); }
+  .mph-sub {
+    font-size: 13px;
+    color: var(--muted-2);
+    max-width: 380px;
+    line-height: 1.7;
+  }
+  .mph-bars {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .mph-bars span {
+    display: block;
+    width: 32px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border-2);
+  }
 
-  /* ─── LINKS ─── */
-  .links {
+  /* ── CONTACT ── */
+  .contact-wrap {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 52px;
-    padding-top: 40px;
-    border-top: 1px solid var(--border);
+    align-items: center;
   }
-  .links a {
+  .clink {
     font-size: 13px;
     color: var(--text-2);
     text-decoration: none;
@@ -491,24 +552,49 @@
     gap: 9px;
     transition: border-color .18s, color .18s, background .18s, box-shadow .18s;
   }
-  .links a .arr { color: var(--muted); transition: color .18s, transform .18s; }
-  .links a:hover,
-  .links a:focus-visible {
+  .clink .arr { color: var(--muted); transition: color .18s, transform .18s; }
+  .clink:hover, .clink:focus-visible {
     border-color: var(--cyan-dim);
     color: var(--cyan);
     background: rgba(44,232,223,0.04);
     box-shadow: 0 0 18px rgba(44,232,223,0.07);
     outline: none;
   }
-  .links a:hover .arr,
-  .links a:focus-visible .arr { color: var(--cyan); transform: translateX(3px); }
-  .links a:focus-visible { box-shadow: 0 0 0 3px rgba(44,232,223,0.2); }
+  .clink:hover .arr, .clink:focus-visible .arr {
+    color: var(--cyan);
+    transform: translateX(3px);
+  }
+  .clink:focus-visible { box-shadow: 0 0 0 3px rgba(44,232,223,0.2); }
 
-  /* ─── FOOTER ─── */
+  .btn-cv {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--bg);
+    text-decoration: none;
+    background: var(--cyan);
+    border: 1px solid var(--cyan);
+    border-radius: 7px;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 20px rgba(44,232,223,0.2);
+    transition: background .18s, box-shadow .18s, transform .12s;
+  }
+  .btn-cv:hover, .btn-cv:focus-visible {
+    background: #3df5ec;
+    box-shadow: 0 0 32px rgba(44,232,223,0.4);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  /* ── FOOTER ── */
   .footer {
     font-size: 11px;
     color: var(--muted);
-    margin-top: 32px;
+    margin-top: 60px;
     padding-top: 24px;
     border-top: 1px solid var(--border);
     display: flex;
@@ -517,31 +603,24 @@
     justify-content: space-between;
     gap: 8px 20px;
   }
-  .footer-segs { display: flex; flex-wrap: wrap; gap: 6px 16px; }
-  .seg { display: inline-flex; align-items: center; gap: 6px; }
-  .d-on  { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 5px var(--green); }
-  .d-off { width: 5px; height: 5px; border-radius: 50%; background: var(--muted-2); }
-  .d-bld { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan-dim); animation: dpulse 2s ease-in-out infinite; }
+  .footer-credo { color: var(--muted-2); letter-spacing: 0.04em; }
+  .footer-credo .fa { color: var(--cyan-dim); }
 
-  /* ─── RESPONSIVE ─── */
+  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
-    .wrap        { padding: 0 16px 64px; }
-    .topbar      { padding-top: 16px; font-size: 12px; }
-    .hero        { padding: 40px 0 36px; }
-    .stats-row   { grid-template-columns: 1fr 1fr; }
-    .nodes-grid  { grid-template-columns: 1fr; }
-    .svc-grid    { grid-template-columns: 1fr 1fr; }
-    .section     { padding: 44px 0 0; }
-    .term-body   { min-height: 300px; }
+    .wrap       { padding: 0 16px 64px; }
+    .topbar     { padding-top: 16px; font-size: 12px; }
+    .hero       { padding: 40px 0 36px; }
+    .section    { padding: 44px 0 0; }
+    .term-body  { min-height: 280px; }
+    .nodes-grid { grid-template-columns: 1fr; }
   }
-  @media (max-width: 380px) {
-    .stats-row  { grid-template-columns: 1fr; }
-    .svc-grid   { grid-template-columns: 1fr; }
+  @media (max-width: 400px) {
+    .about-kv { grid-template-columns: 1fr 1fr; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .cursor, .dot-pulse, .d-bld { animation: none; }
-    .sdot.on, .sdot.wip { animation: none; }
+    .cursor, .dot-pulse { animation: none; }
   }
 </style>
 </head>
@@ -556,8 +635,10 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="eyebrow">// <span class="node">node: <b>technopriest.net</b></span> — first light</p>
-    <h1 class="hero-name"><span class="hl">M</span>OODY</h1>
+    <p class="eyebrow">// <span class="ec">binary liturgy — machine-spirit: <b>awakening</b></span></p>
+    <h1 class="hero-name">
+      <span class="hl">M</span>OODY<span class="sep"> · </span><span class="sub">technopriest</span>
+    </h1>
     <p class="hero-role">
       <span>sysadmin</span>
       <span class="arr">——&gt;</span>
@@ -565,10 +646,10 @@
     </p>
     <div class="hero-tags">
       <span class="htag">Linux</span>
-      <span class="htag">Python</span>
-      <span class="htag">Self-hosting</span>
-      <span class="htag">Automation</span>
-      <span class="htag">IaC</span>
+      <span class="htag">WireGuard</span>
+      <span class="htag">Zabbix</span>
+      <span class="htag">MikroTik</span>
+      <span class="htag">Docker</span>
       <span class="htag">Home Lab</span>
     </div>
   </section>
@@ -576,7 +657,7 @@
   <!-- TERMINAL -->
   <div class="section">
     <div class="sec-head">
-      <span class="sec-title">Terminal</span>
+      <span class="sec-title">Init</span>
       <span class="sec-line"></span>
       <span class="sec-idx">01</span>
     </div>
@@ -589,34 +670,46 @@
     </section>
   </div>
 
-  <!-- STATS -->
+  <!-- ABOUT -->
   <div class="section">
     <div class="sec-head">
-      <span class="sec-title">Sys Stats</span>
+      <span class="sec-title">About</span>
       <span class="sec-line"></span>
       <span class="sec-idx">02</span>
     </div>
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-key">sys.uptime</div>
-        <div class="stat-val">847<span class="unit">d</span></div>
-        <div class="stat-sub">main workstation</div>
+    <div class="about-kv">
+      <div class="kv">
+        <div class="kv-k">// name</div>
+        <div class="kv-v">Filipp</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-key">nodes.online</div>
-        <div class="stat-val">4<span class="unit">/5</span></div>
-        <div class="stat-sub">1 provisioning</div>
+      <div class="kv">
+        <div class="kv-k">// age</div>
+        <div class="kv-v">24</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-key">services</div>
-        <div class="stat-val">12</div>
-        <div class="stat-sub">self-hosted</div>
+      <div class="kv">
+        <div class="kv-k">// location</div>
+        <div class="kv-v">Almaty, KZ</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-key">commits</div>
-        <div class="stat-val">∞</div>
-        <div class="stat-sub">things broken &amp; fixed</div>
+      <div class="kv">
+        <div class="kv-k">// current role</div>
+        <div class="kv-v">Night-shift Sysadmin</div>
       </div>
+    </div>
+    <div class="about-text">
+      <p>
+        Trained as a <span class="hl">technician-programmer</span> (4-year college).
+        Came up through freelance web development and <span class="hl">device repair</span> —
+        phones, PCs, laptops — before moving into systems administration.
+      </p>
+      <p>
+        Currently on night shift: provisioning workstations, maintaining
+        <span class="acc">WireGuard VPNs</span>, and monitoring a comms node
+        with <span class="acc">Zabbix</span>. MikroTik RouterOS is a daily tool.
+      </p>
+      <p>
+        Building a home lab to make the move into DevOps in real conditions —
+        not tutorial-land.
+      </p>
     </div>
   </div>
 
@@ -629,239 +722,230 @@
     </div>
     <div class="skill-groups">
       <div class="skill-group">
-        <div class="sg-label">// infrastructure</div>
+        <div class="sg-label">// ops &amp; networking</div>
         <div class="stags">
           <span class="stag hot">Linux</span>
-          <span class="stag hot">Proxmox</span>
-          <span class="stag">Docker</span>
-          <span class="stag">KVM</span>
-          <span class="stag">Networking</span>
+          <span class="stag hot">Networking</span>
+          <span class="stag hot">WireGuard / VPN</span>
+          <span class="stag hot">Zabbix</span>
+          <span class="stag hot">MikroTik RouterOS</span>
         </div>
       </div>
       <div class="skill-group">
-        <div class="sg-label">// automation</div>
+        <div class="sg-label">// tooling</div>
         <div class="stags">
-          <span class="stag hot">Python</span>
+          <span class="stag hot">Hardware / Repair</span>
+          <span class="stag hot">Git</span>
           <span class="stag hot">Bash</span>
-          <span class="stag">Ansible</span>
-          <span class="stag">Terraform</span>
-          <span class="stag next">→ CI/CD</span>
         </div>
       </div>
       <div class="skill-group">
-        <div class="sg-label">// services &amp; edge</div>
+        <div class="sg-label">// building now</div>
         <div class="stags">
-          <span class="stag">Nginx</span>
-          <span class="stag">Traefik</span>
-          <span class="stag">Cloudflare</span>
-          <span class="stag">Tailscale</span>
-          <span class="stag next">→ Kubernetes</span>
+          <span class="stag wip">Docker</span>
+          <span class="stag wip">Python</span>
+          <span class="stag wip">Proxmox</span>
+          <span class="stag wip">Self-hosting</span>
+          <span class="stag wip">CI/CD</span>
         </div>
       </div>
       <div class="skill-group">
-        <div class="sg-label">// observability</div>
+        <div class="sg-label">// on the horizon</div>
         <div class="stags">
-          <span class="stag">Grafana</span>
-          <span class="stag">Prometheus</span>
-          <span class="stag">Loki</span>
-          <span class="stag next">→ OpenTelemetry</span>
+          <span class="stag next">Kubernetes</span>
+          <span class="stag next">Terraform</span>
+          <span class="stag next">Ansible</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HOMELAB NODES -->
+  <!-- PROJECTS -->
   <div class="section">
     <div class="sec-head">
-      <span class="sec-title">Homelab</span>
+      <span class="sec-title">Projects</span>
       <span class="sec-line"></span>
       <span class="sec-idx">04</span>
     </div>
-    <div class="nodes-grid">
-      <div class="node-card">
-        <div class="node-top">
-          <span class="node-name">proxmox-01</span>
-          <span class="node-status">
-            <span class="sdot on"></span>
-            <span class="st-on">online</span>
-          </span>
+    <div class="proj-grid">
+
+      <a class="proj-card" href="https://github.com/Moody-code365/TimeMateBot" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <span class="proj-name">TimeMateBot</span>
+          <span class="proj-badge oss">open source</span>
         </div>
-        <div class="node-role">Hypervisor · main compute</div>
-        <div class="node-chips">
-          <span class="nchip">Proxmox VE</span>
-          <span class="nchip">x86_64</span>
-          <span class="nchip">16C/32T</span>
+        <div class="proj-desc">
+          Telegram bot for time checks and reminders. Fully containerized with Docker.
         </div>
-      </div>
-      <div class="node-card">
-        <div class="node-top">
-          <span class="node-name">nas-01</span>
-          <span class="node-status">
-            <span class="sdot on"></span>
-            <span class="st-on">online</span>
-          </span>
+        <div class="proj-foot">
+          <div class="proj-chips">
+            <span class="pchip">Python</span>
+            <span class="pchip">Docker</span>
+            <span class="pchip">Telegram Bot API</span>
+          </div>
+          <span class="proj-link">github ↗</span>
         </div>
-        <div class="node-role">Storage · NAS array</div>
-        <div class="node-chips">
-          <span class="nchip">TrueNAS</span>
-          <span class="nchip">ZFS</span>
-          <span class="nchip">12 TB</span>
+      </a>
+
+      <a class="proj-card" href="https://github.com/Moody-code365/TengeBot" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <span class="proj-name">TengeBot</span>
+          <span class="proj-badge oss">open source</span>
         </div>
-      </div>
-      <div class="node-card">
-        <div class="node-top">
-          <span class="node-name">vpn-01</span>
-          <span class="node-status">
-            <span class="sdot on"></span>
-            <span class="st-on">online</span>
-          </span>
+        <div class="proj-desc">
+          Detects $ / ₸ mentions in Telegram chats and converts the amount on the spot.
         </div>
-        <div class="node-role">Networking · tunnel gateway</div>
-        <div class="node-chips">
-          <span class="nchip">Tailscale</span>
-          <span class="nchip">WireGuard</span>
-          <span class="nchip">RPi 4</span>
+        <div class="proj-foot">
+          <div class="proj-chips">
+            <span class="pchip">Python</span>
+            <span class="pchip">Telegram Bot API</span>
+          </div>
+          <span class="proj-link">github ↗</span>
         </div>
-      </div>
-      <div class="node-card">
-        <div class="node-top">
-          <span class="node-name">mon-01</span>
-          <span class="node-status">
-            <span class="sdot on"></span>
-            <span class="st-on">online</span>
-          </span>
+      </a>
+
+      <a class="proj-card" href="https://github.com/Moody-code365/Telegram-PCBuilderBot" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <span class="proj-name">PCBuilderBot</span>
+          <span class="proj-badge oss">open source</span>
         </div>
-        <div class="node-role">Observability · monitoring stack</div>
-        <div class="node-chips">
-          <span class="nchip">Grafana</span>
-          <span class="nchip">Prometheus</span>
-          <span class="nchip">Loki</span>
+        <div class="proj-desc">
+          Telegram assistant for selecting PC components and planning builds.
         </div>
-      </div>
-      <div class="node-card">
-        <div class="node-top">
-          <span class="node-name">origin-01</span>
-          <span class="node-status">
-            <span class="sdot wip"></span>
-            <span class="st-wip">provisioning</span>
-          </span>
+        <div class="proj-foot">
+          <div class="proj-chips">
+            <span class="pchip">Python</span>
+            <span class="pchip">Telegram Bot API</span>
+          </div>
+          <span class="proj-link">github ↗</span>
         </div>
-        <div class="node-role">Web · portfolio origin server</div>
-        <div class="node-chips">
-          <span class="nchip">Nginx</span>
-          <span class="nchip">Cloudflare</span>
-          <span class="nchip">TLS</span>
+      </a>
+
+      <a class="proj-card" href="https://oknovdom.kz" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <span class="proj-name">oknovdom.kz</span>
+          <span class="proj-badge live">live</span>
         </div>
-      </div>
+        <div class="proj-desc">
+          Commercial conversion landing for a windows company in Almaty. Real client work.
+        </div>
+        <div class="proj-foot">
+          <div class="proj-chips">
+            <span class="pchip">Web</span>
+            <span class="pchip">Client work</span>
+            <span class="pchip">Almaty</span>
+          </div>
+          <span class="proj-link">visit ↗</span>
+        </div>
+      </a>
+
     </div>
   </div>
 
-  <!-- SERVICES -->
+  <!-- HOMELAB -->
   <div class="section">
     <div class="sec-head">
-      <span class="sec-title">Services</span>
+      <span class="sec-title">Home Lab</span>
       <span class="sec-line"></span>
       <span class="sec-idx">05</span>
     </div>
-    <div class="svc-grid">
-      <div class="svc-card">
-        <div class="svc-ico">PT</div>
-        <div>
-          <div class="svc-name">Portainer</div>
-          <div class="svc-desc">Container management UI</div>
+    <div class="lab-banner">
+      <div class="lb-title">under construction — the build begins</div>
+      <div class="lb-sub">3 nodes acquired · provisioning pending · lab coming online</div>
+    </div>
+    <div class="nodes-grid">
+
+      <div class="node-card">
+        <div class="node-top">
+          <span class="node-name">node-01</span>
+          <span class="node-status">
+            <span class="sdot dormant"></span>
+            <span class="st-dormant">awaiting setup</span>
+          </span>
+        </div>
+        <div class="node-role">Laptop · machine-spirit: dormant</div>
+        <div class="node-chips">
+          <span class="nchip">Intel i3 (4th gen)</span>
         </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-ico">TK</div>
-        <div>
-          <div class="svc-name">Traefik</div>
-          <div class="svc-desc">Reverse proxy &amp; edge router</div>
+
+      <div class="node-card">
+        <div class="node-top">
+          <span class="node-name">node-02</span>
+          <span class="node-status">
+            <span class="sdot dormant"></span>
+            <span class="st-dormant">awaiting setup</span>
+          </span>
+        </div>
+        <div class="node-role">Laptop · machine-spirit: dormant</div>
+        <div class="node-chips">
+          <span class="nchip">Intel i5 (4th gen)</span>
         </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-ico">VW</div>
-        <div>
-          <div class="svc-name">Vaultwarden</div>
-          <div class="svc-desc">Self-hosted password vault</div>
+
+      <div class="node-card">
+        <div class="node-top">
+          <span class="node-name">node-03</span>
+          <span class="node-status">
+            <span class="sdot planned"></span>
+            <span class="st-planned">planned</span>
+          </span>
+        </div>
+        <div class="node-role">Samsung A50 · flash pending</div>
+        <div class="node-chips">
+          <span class="nchip pending">postmarketOS</span>
         </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-ico">GF</div>
-        <div>
-          <div class="svc-name">Grafana</div>
-          <div class="svc-desc">Metrics &amp; dashboards</div>
-        </div>
-      </div>
-      <div class="svc-card">
-        <div class="svc-ico">GT</div>
-        <div>
-          <div class="svc-name">Gitea</div>
-          <div class="svc-desc">Self-hosted git forge</div>
-        </div>
-      </div>
-      <div class="svc-card">
-        <div class="svc-ico">UK</div>
-        <div>
-          <div class="svc-name">Uptime Kuma</div>
-          <div class="svc-desc">Service uptime monitoring</div>
-        </div>
-      </div>
+
     </div>
   </div>
 
-  <!-- ROADMAP -->
+  <!-- LIVE METRICS -->
   <div class="section">
     <div class="sec-head">
-      <span class="sec-title">Roadmap</span>
+      <span class="sec-title">Live Metrics</span>
       <span class="sec-line"></span>
       <span class="sec-idx">06</span>
     </div>
-    <div class="rm-list">
-      <div class="rm-item is-done">
-        <div class="rm-box done">✓</div>
-        <div class="rm-text">Landing page · first light</div>
-        <div class="rm-badge done">done</div>
+    <div class="metrics-ph">
+      <div class="mph-title">real-time node stats</div>
+      <div class="mph-sub">
+        Coming online with the lab. Live metrics from home-lab nodes once the cluster is operational.
       </div>
-      <div class="rm-item">
-        <div class="rm-box wip">~</div>
-        <div class="rm-text">About · full profile &amp; background</div>
-        <div class="rm-badge wip">wip</div>
-      </div>
-      <div class="rm-item">
-        <div class="rm-box"></div>
-        <div class="rm-text">Projects · portfolio showcase</div>
-        <div class="rm-badge">queued</div>
-      </div>
-      <div class="rm-item">
-        <div class="rm-box"></div>
-        <div class="rm-text">Home Lab · full topology &amp; wiki</div>
-        <div class="rm-badge">queued</div>
-      </div>
-      <div class="rm-item">
-        <div class="rm-box"></div>
-        <div class="rm-text">Live Metrics · real-time node stats</div>
-        <div class="rm-badge">queued</div>
+      <div class="mph-bars">
+        <span></span><span></span><span></span><span></span><span></span>
       </div>
     </div>
   </div>
 
-  <!-- LINKS -->
-  <nav class="links" aria-label="Links">
-    <a href="https://github.com/Moody-code365" target="_blank" rel="noopener">
-      github <span class="arr">→</span>
-    </a>
-    <a href="mailto:moody@technopriest.net">
-      moody@technopriest.net <span class="arr">→</span>
-    </a>
-  </nav>
+  <!-- CONTACT -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-title">Contact</span>
+      <span class="sec-line"></span>
+      <span class="sec-idx">07</span>
+    </div>
+    <div class="contact-wrap">
+      <a class="clink" href="https://github.com/Moody-code365" target="_blank" rel="noopener">
+        github.com/Moody-code365 <span class="arr">→</span>
+      </a>
+      <a class="clink" href="mailto:moody@technopriest.net">
+        moody@technopriest.net <span class="arr">→</span>
+      </a>
+      <!-- TODO: replace href with your Telegram handle, e.g. https://t.me/yourhandle -->
+      <a class="clink" href="#" aria-label="Telegram — handle coming soon">
+        Telegram <span class="arr">→</span>
+      </a>
+      <a class="btn-cv" href="/moody-cv.pdf" download>
+        ↓ Download CV
+      </a>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-segs">
-      <span class="seg"><span class="d-on"></span>edge: cloudflare</span>
-      <span class="seg"><span class="d-bld"></span>origin: home-lab (provisioning)</span>
-    </div>
-    <span>v0.1 · technopriest.net</span>
+    <span class="footer-credo"><span class="fa">In nomine Omnissiae.</span> All data is sacred.</span>
+    <span>technopriest.net · v0.2</span>
   </footer>
 
 </div>
@@ -869,28 +953,33 @@
 <script>
 (function () {
   var term = document.getElementById('term');
-
   var P = '<span class="prompt">moody<span class="path">@technopriest:~$</span></span> ';
+
   var seq = [
     {
       cmd: 'whoami',
-      out: ['<span class="out"><span class="hl">moody</span> — sysadmin evolving into a DevOps engineer</span>']
-    },
-    {
-      cmd: 'cat mission.txt',
-      out: ['<span class="out">I break things in my home lab so I learn them for real.</span>']
-    },
-    {
-      cmd: 'systemctl status portfolio.service',
       out: [
-        '<span class="out"><span class="ok">●</span> portfolio.service — moody’s DevOps portfolio</span>',
-        '<span class="out">     Active: <span class="wip">building</span> (under construction)</span>',
-        '<span class="out">      Stack: <span class="accent">Linux · Python · self-hosting · automation · IaC</span></span>'
+        '<span class="out"><span class="hl">Filipp</span> · 24 · Almaty, KZ</span>',
+        '<span class="out">sysadmin by night — building toward DevOps by doing</span>'
       ]
     },
     {
-      cmd: 'ls ./next/',
-      out: ['<span class="out">about/   projects/   home-lab/   live-metrics/</span>']
+      cmd: 'cat path.log',
+      out: [
+        '<span class="out"><span class="hl">web dev (freelance)</span>  →  <span class="hl">device repair</span>  →  <span class="accent">sysadmin</span></span>',
+        '<span class="out">night ops: WireGuard VPNs · Zabbix · workstation provisioning</span>',
+        '<span class="out">learn stack: <span class="wip">Docker</span> · <span class="wip">Python</span> · <span class="wip">Proxmox</span> · <span class="wip">self-hosting</span></span>'
+      ]
+    },
+    {
+      cmd: 'systemctl status lab.service',
+      out: [
+        '<span class="out"><span class="ok">●</span> lab.service — home-lab bootstrap</span>',
+        '<span class="out">   machine-spirit: <span class="wip">awakening</span></span>',
+        '<span class="out">   nodes: 3 acquired · provisioning pending</span>',
+        '<span class="out">   goal: <span class="accent">real-world DevOps, not tutorial-land</span></span>',
+        '<span class="cmt"># <span class="omni">Omnissiah blesses this session.</span> Proceed with purpose.</span>'
+      ]
     }
   ];
 
@@ -921,7 +1010,7 @@
       term.innerHTML = built + ls + text.slice(0, i) + '<span class="cursor"></span></span></span>';
       if (i < text.length) {
         i++;
-        setTimeout(tick, 34 + Math.random() * 36);
+        setTimeout(tick, 32 + Math.random() * 38);
       } else {
         built += ls + text + '</span></span>';
         done();
@@ -936,7 +1025,7 @@
         built += '<span class="line">' + lines[k] + '</span>';
         term.innerHTML = built + cursorLine();
         k++;
-        setTimeout(next, 130);
+        setTimeout(next, 120);
       } else {
         done();
       }
@@ -949,13 +1038,13 @@
     typeCmd(step.cmd, function () {
       setTimeout(function () {
         printOut(step.out, function () {
-          setTimeout(runStep, 360);
+          setTimeout(runStep, 340);
         });
-      }, 180);
+      }, 160);
     });
   }
 
-  setTimeout(runStep, 450);
+  setTimeout(runStep, 400);
 })();
 </script>
 </body>
