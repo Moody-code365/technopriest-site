@@ -107,7 +107,7 @@
    Until it's set/reachable the section shows an honest state —
    it never invents repos. */
 (function () {
-  var PROJECTS_ENDPOINT = ""; // e.g. "https://technopriest-projects.<you>.workers.dev"
+  var PROJECTS_ENDPOINT = "https://technopriest-projects.filinsteam2016.workers.dev"; // e.g. "https://technopriest-projects.<you>.workers.dev"
 
   var grid = document.getElementById('proj-grid');
   if (!grid) return;

@@ -6,4 +6,4 @@ compatibility_date = "2025-06-01"
 # Paste the returned id below.
 [[kv_namespaces]]
 binding = "PROJECTS_KV"
-id = "PASTE_KV_NAMESPACE_ID_HERE"
+id = "be0bcceb7b3140b7a14a025ed39ca9db"
