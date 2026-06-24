@@ -612,6 +612,98 @@
     .cursor, .dot-pulse { animation: none; }
   }
 
+  /* ── PROJECTS: live feed meta ── */
+  .proj-meta {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .proj-meta .pm-sep { margin: 0 5px; color: var(--muted-2); }
+  .proj-meta .pm-arr { color: var(--cyan-dim); margin: 0 3px; }
+
+  /* ── DOCS CARD ── */
+  .docs-card {
+    display: block;
+    text-decoration: none;
+    background: linear-gradient(160deg, var(--panel-2) 0%, var(--panel) 100%);
+    border: 1px solid var(--border-2);
+    border-left: 2px solid var(--cyan-dim);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.02),
+      0 20px 48px -16px rgba(0,0,0,0.6);
+    transition: border-color .2s, box-shadow .25s, background .2s;
+  }
+  .docs-card:hover, .docs-card:focus-visible {
+    border-color: var(--cyan-dim);
+    border-left-color: var(--cyan);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.02),
+      0 20px 48px -16px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(44,232,223,0.1),
+      0 0 32px rgba(44,232,223,0.06),
+      -4px 0 24px rgba(44,232,223,0.08);
+    outline: none;
+  }
+  .docs-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 18px;
+    background: rgba(255,255,255,0.012);
+    border-bottom: 1px solid var(--border);
+  }
+  .docs-head-label {
+    font-size: 11px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.07em;
+  }
+  .docs-badge {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .docs-arr {
+    color: var(--cyan-dim);
+    transition: transform .2s, color .2s;
+    display: inline-block;
+  }
+  .docs-card:hover .docs-arr { transform: translateX(4px); color: var(--cyan); }
+  .docs-body {
+    padding: 20px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .docs-url {
+    font-family: var(--head);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--cyan);
+    text-shadow: 0 0 24px rgba(44,232,223,0.25);
+    transition: text-shadow .2s;
+  }
+  .docs-card:hover .docs-url { text-shadow: 0 0 32px rgba(44,232,223,0.45); }
+  .docs-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+  .docs-flavor {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
   /* ── PROJECTS: dynamic states (live GitHub feed) ── */
   .proj-status {
     grid-column: 1 / -1;
